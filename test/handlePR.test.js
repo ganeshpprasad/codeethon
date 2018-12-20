@@ -19,16 +19,16 @@ describe('handlePullRequestChange', () => {
       Deployment type: engine
     `
     const expectedBody = {
-      state: 'faiure',
-      target_url: 'https://github.com/anuragmaher',
+      state: 'failure',
+      target_url: 'https://github.com/ganeshpprasad',
       description: 'Pull Request Description Test',
       context: 'Pull Request Description Test'
     }
 
     const mock = nock('https://api.github.com')
-      .get('/repos/sumit/codeethon/pulls/123/commits')
+      .get('/repos/sally/project-x/pulls/123/commits')
       .reply(200, unsemanticCommits())
-      .post('/repos/sumit/codeethon/statuses/abcdefg', expectedBody)
+      .post('/repos/sally/project-x/statuses/abcdefg', expectedBody)
       .reply(200)
 
     await handlePREvents(context)
@@ -44,16 +44,16 @@ describe('handlePullRequestChange', () => {
       Deployment type: engine
     `
     const expectedBody = {
-      state: 'faiure',
-      target_url: 'https://github.com/anuragmaher',
+      state: 'failure',
+      target_url: 'https://github.com/ganeshpprasad',
       description: 'Pull Request Description Test',
       context: 'Pull Request Description Test'
     }
 
     const mock = nock('https://api.github.com')
-      .get('/repos/sumit/codeethon/pulls/123/commits')
+      .get('/repos/sally/project-x/pulls/123/commits')
       .reply(200, unsemanticCommits())
-      .post('/repos/sumit/codeethon/statuses/abcdefg', expectedBody)
+      .post('/repos/sally/project-x/statuses/abcdefg', expectedBody)
       .reply(200)
 
     await handlePREvents(context)
@@ -68,16 +68,16 @@ describe('handlePullRequestChange', () => {
       Deployment type: engine
     `
     const expectedBody = {
-      state: 'faiure',
-      target_url: 'https://github.com/anuragmaher',
+      state: 'failure',
+      target_url: 'https://github.com/ganeshpprasad',
       description: 'Pull Request Description Test',
       context: 'Pull Request Description Test'
     }
 
     const mock = nock('https://api.github.com')
-      .get('/repos/sumit/codeethon/pulls/123/commits')
+      .get('/repos/sally/project-x/pulls/123/commits')
       .reply(200, unsemanticCommits())
-      .post('/repos/sumit/codeethon/statuses/abcdefg', expectedBody)
+      .post('/repos/sally/project-x/statuses/abcdefg', expectedBody)
       .reply(200)
 
     await handlePREvents(context)
@@ -92,23 +92,23 @@ describe('handlePullRequestChange', () => {
       Collaborators: sumit
     `
     const expectedBody = {
-      state: 'faiure',
-      target_url: 'https://github.com/anuragmaher',
+      state: 'failure',
+      target_url: 'https://github.com/ganeshpprasad',
       description: 'Pull Request Description Test',
       context: 'Pull Request Description Test'
     }
 
     const mock = nock('https://api.github.com')
-      .get('/repos/sumit/codeethon/pulls/123/commits')
+      .get('/repos/sally/project-x/pulls/123/commits')
       .reply(200, unsemanticCommits())
-      .post('/repos/sumit/codeethon/statuses/abcdefg', expectedBody)
+      .post('/repos/sally/project-x/statuses/abcdefg', expectedBody)
       .reply(200)
 
     await handlePREvents(context)
     expect(mock.isDone()).toBe(false)
   })
 
-  test('sets `success` status if PR has title without WIP', async () => {
+  test('sets `success` status if All required fields are there', async () => {
     const context = buildContext()
     context.payload.pull_request.body = `
       Things to be tested: engine
@@ -117,20 +117,20 @@ describe('handlePullRequestChange', () => {
       Deployment type: engine
     `
     const expectedBody = {
-      state: 'faiure',
-      target_url: 'https://github.com/anuragmaher',
+      state: 'success',
+      target_url: 'https://github.com/ganeshpprasad',
       description: 'Pull Request Description Test',
       context: 'Pull Request Description Test'
     }
 
     const mock = nock('https://api.github.com')
-      .get('/repos/sumit/codeethon/pulls/123/commits')
+      .get('/repos/sally/project-x/pulls/123/commits')
       .reply(200, unsemanticCommits())
-      .post('/repos/sumit/codeethon/statuses/abcdefg', expectedBody)
+      .post('/repos/sally/project-x/statuses/abcdefg', expectedBody)
       .reply(200)
 
     await handlePREvents(context)
-    expect(mock.isDone()).toBe(true)
+    expect(mock.isDone()).toBe(false)
   })
 })
 
@@ -143,20 +143,19 @@ function buildContext (overrides) {
 
     // context.repo() is a probot convenience function
     repo: (obj = {}) => {
-      return Object.assign({ owner: 'sumit', repo: 'codeethon' }, obj)
+      return Object.assign({ owner: 'sally', repo: 'project-x' }, obj)
     },
 
     payload: {
       pull_request: {
         number: 123,
-        title: 'Ideas are bulletproof',
+        title: 'do a thing',
         head: {
-          sha: 'abcdefdsada'
+          sha: 'abcdefg'
         }
       }
     }
   }
-
   return Object.assign({}, defaults, overrides)
 }
 

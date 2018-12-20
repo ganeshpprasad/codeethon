@@ -1,19 +1,12 @@
 module.exports = probotPlugin
 
-const handlePullRequestChange = require('./lib/handle-pull-request-change')
-const handlePROpened = require('./lib/handlePROpened');
+const handlePREvents = require('./lib/handlePREvents');
 function probotPlugin (robot) {
-  robot.on(
-    'pull_request.opened',
-    handlePROpened
-  )
-
-  robot.on(
-    'push', async context => {
-      // Code was pushed to the repo, what should we do with it?
-      robot.log(context)
-      console.log(context)
-  })
+  robot.on([
+      'pull_request.opened',
+      'pull_request.edited',
+      'pull_request.synchronize'
+    ], handlePREvents)
 
   robot.on('issues.opened', async context => {
     const issueComment = context.issue({ body: 'Thanks for opening this issue!' })

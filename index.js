@@ -9,6 +9,12 @@ function probotPlugin (robot) {
     'pull_request.synchronize'
   ], handlePullRequestChange)
 
+  robot.on(
+    'push', async context => {
+      // Code was pushed to the repo, what should we do with it?
+      app.log(context)
+  })
+
   robot.on('issues.opened', async context => {
     const issueComment = context.issue({ body: 'Thanks for opening this issue!' })
     return context.github.issues.createComment(issueComment)

@@ -3,7 +3,7 @@
 
 # Github pull - WIP:
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that A Probot app
+> A GitHub App built with [Probot](https://github.com/probot/probot) that makes sure if there is WIP: in pull request title, it will not be allowed to merge.
 
 ## Setup
 

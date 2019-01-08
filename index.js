@@ -1,6 +1,6 @@
 module.exports = probotPlugin
-
 const handlePREvents = require('./lib/handlePREvents');
+
 function probotPlugin (robot) {
   robot.on([
       'pull_request.opened',
